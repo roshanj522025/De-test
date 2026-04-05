@@ -1,0 +1,26 @@
+{
+  "name": "Desktop Codespace",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
+      "password": "vscode",
+      "webPort": "6080",
+      "vncPort": "5901"
+    }
+  },
+  
+  "forwardPorts": [6080, 5901],
+  "portsAttributes": {
+    "6080": {
+      "label": "NoVNC (Browser)",
+      "onAutoForward": "silent"
+    },
+    "5901": {
+      "label": "VNC Server",
+      "onAutoForward": "silent"
+    }
+  },
+  
+  "remoteUser": "codespace"
+}
