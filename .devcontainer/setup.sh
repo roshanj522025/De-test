@@ -5,8 +5,10 @@ pacman-key --init
 pacman-key --populate archlinux
 pacman -Syu --noconfirm
 
-# Install i3, VNC, and essentials
+# Install i3, VNC, and essentials (includes git and base-devel)
 pacman -S --noconfirm \
+    base-devel \
+    git \
     i3-wm \
     i3status \
     dmenu \
