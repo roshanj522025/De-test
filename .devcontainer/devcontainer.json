@@ -1,11 +1,10 @@
 {
-  "name": "Ubuntu i3 VNC",
-  "image": "ubuntu:22.04",
-  "postCreateCommand": ".devcontainer/setup.sh",
-  "postStartCommand": "vncserver :1 -geometry 1920x1080 -depth 24 || true",
-  "forwardPorts": [5901, 6080],
-  "portsAttributes": {
-    "5901": { "label": "VNC", "protocol": "tcp" },
-    "6080": { "label": "noVNC", "protocol": "http" }
-  }
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "privileged": true,
+  "forwardPorts": [6080],
+  "runArgs": ["--cap-add=SYS_ADMIN"],
+  "postCreateCommand": "pipx install numpy && mkdir -p ~/.vnc && printf 'password\n' | vncpasswd -f > ~/.vnc/passwd && chmod 600 ~/.vnc/passwd && git clone https://github.com/novnc/noVNC.git",
+  "postStartCommand": "vncserver -xstartup \"cinnamon-session\" -rfbport 5900 && ./noVNC/utils/novnc_proxy --vnc 127.0.0.1:5900 --listen localhost:6080"
 }
