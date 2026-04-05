@@ -1,27 +1,19 @@
 {
-  "name": "Codespaces Desktop (Fixed)",
-  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
-
-  "runArgs": ["--init"],
-
-  "forwardPorts": [6080, 5901],
-
-  "postCreateCommand": "
-    sudo apt-get update && \
-    sudo apt-get install -y \
-      xfce4 xfce4-terminal \
-      tigervnc-standalone-server tigervnc-common \
-      novnc websockify && \
-    mkdir -p ~/.vnc && \
-    echo 'vscode' | vncpasswd -f > ~/.vnc/passwd && \
-    chmod 600 ~/.vnc/passwd
-  ",
-
-
-  "postStartCommand": "
-    nohup bash -c ' \
-      vncserver -localhost no -geometry 1920x1080 -depth 24 && \
-      /usr/share/novnc/utils/novnc_proxy --vnc localhost:5901 --listen 6080 \
-    ' > /tmp/vnc.log 2>&1 &
-  "
+  "name": "Arch i3 VNC",
+  "image": "archlinux:latest",
+  "postCreateCommand": ".devcontainer/setup.sh",
+  "forwardPorts": [5901, 6080],
+  "portsAttributes": {
+    "5901": {
+      "label": "VNC TCP",
+      "protocol": "tcp"
+    },
+    "6080": {
+      "label": "noVNC (Browser)",
+      "protocol": "http"
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  }
 }
