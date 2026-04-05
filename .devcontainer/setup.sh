@@ -1,51 +1,37 @@
 #!/bin/bash
 
-# Initialize pacman keys (required for Arch containers)
-pacman-key --init
-pacman-key --populate archlinux
-pacman -Syu --noconfirm
+# Update packages
+apt-get update && apt-get upgrade -y
 
-# Install i3, VNC, and essentials (includes git and base-devel)
-pacman -S --noconfirm \
-    base-devel \
-    git \
-    i3-wm \
+# Install i3, VNC, tools (no keyring nonsense!)
+apt-get install -y \
+    i3 \
     i3status \
     dmenu \
-    tigervnc \
-    xorg-server \
-    xorg-xinit \
-    xorg-xsetroot \
-    xorg-xrandr \
+    tigervnc-standalone-server \
+    tigervnc-viewer \
     xterm \
     alacritty \
-    ttf-dejavu \
-    ttf-liberation \
     firefox \
     novnc \
-    python-websockify \
-    net-tools
+    websockify \
+    net-tools \
+    git \
+    sudo
 
-# Create VNC config directory
+# Setup VNC
 mkdir -p ~/.vnc
-
-# Create xstartup script (launches i3 when VNC connects)
 cat > ~/.vnc/xstartup << 'EOF'
 #!/bin/sh
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
-
-# Set background color
 xsetroot -solid "#2E3436"
-
-# Start i3
 exec i3
 EOF
-
 chmod +x ~/.vnc/xstartup
 
-# Set default VNC password (change this!)
+# Set password
 echo "codespaces" | vncpasswd -f > ~/.vnc/passwd
 chmod 600 ~/.vnc/passwd
 
-echo "Setup complete. Run 'vncserver :1' to start."
+echo "Done! VNC ready."
