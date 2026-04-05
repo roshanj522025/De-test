@@ -1,7 +1,7 @@
 {
   "name": "Arch i3 VNC",
   "image": "archlinux:latest",
-  "postCreateCommand": ".devcontainer/setup.sh",
+  "postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
   "forwardPorts": [5901, 6080],
   "portsAttributes": {
     "5901": {
@@ -12,8 +12,5 @@
       "label": "noVNC (Browser)",
       "protocol": "http"
     }
-  },
-  "features": {
-    "ghcr.io/devcontainers/features/github-cli:1": {}
   }
 }
