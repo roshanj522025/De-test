@@ -2,6 +2,7 @@
   "name": "Arch i3 VNC",
   "image": "archlinux:latest",
   "postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
+  "postStartCommand": "vncserver :1 -geometry 1920x1080 -depth 24 || true",
   "forwardPorts": [5901, 6080],
   "portsAttributes": {
     "5901": {
