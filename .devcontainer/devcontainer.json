@@ -1,26 +1,27 @@
 {
-  "name": "Desktop Codespace",
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
-  
-  "features": {
-    "ghcr.io/devcontainers/features/desktop-lite:1": {
-      "password": "vscode",
-      "webPort": "6080",
-      "vncPort": "5901"
-    }
-  },
-  
+  "name": "Codespaces Desktop (Fixed)",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+
+  "runArgs": ["--init"],
+
   "forwardPorts": [6080, 5901],
-  "portsAttributes": {
-    "6080": {
-      "label": "NoVNC (Browser)",
-      "onAutoForward": "silent"
-    },
-    "5901": {
-      "label": "VNC Server",
-      "onAutoForward": "silent"
-    }
-  },
-  
-  "remoteUser": "codespace"
+
+  "postCreateCommand": "
+    sudo apt-get update && \
+    sudo apt-get install -y \
+      xfce4 xfce4-terminal \
+      tigervnc-standalone-server tigervnc-common \
+      novnc websockify && \
+    mkdir -p ~/.vnc && \
+    echo 'vscode' | vncpasswd -f > ~/.vnc/passwd && \
+    chmod 600 ~/.vnc/passwd
+  ",
+
+
+  "postStartCommand": "
+    nohup bash -c ' \
+      vncserver -localhost no -geometry 1920x1080 -depth 24 && \
+      /usr/share/novnc/utils/novnc_proxy --vnc localhost:5901 --listen 6080 \
+    ' > /tmp/vnc.log 2>&1 &
+  "
 }
