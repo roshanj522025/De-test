@@ -1,20 +1,11 @@
 {
-  "name": "Arch i3 VNC",
-  "image": "archlinux:latest",
-  "postCreateCommand": "chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
+  "name": "Ubuntu i3 VNC",
+  "image": "ubuntu:22.04",
+  "postCreateCommand": ".devcontainer/setup.sh",
   "postStartCommand": "vncserver :1 -geometry 1920x1080 -depth 24 || true",
-  "forwardPorts": [
-    5901,
-    6080
-  ],
+  "forwardPorts": [5901, 6080],
   "portsAttributes": {
-    "5901": {
-      "label": "VNC TCP",
-      "protocol": "tcp"
-    },
-    "6080": {
-      "label": "noVNC (Browser)",
-      "protocol": "http"
-    }
+    "5901": { "label": "VNC", "protocol": "tcp" },
+    "6080": { "label": "noVNC", "protocol": "http" }
   }
 }
