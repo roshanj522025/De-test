@@ -16,6 +16,7 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         tigervnc-standalone-server \
+        tigervnc-tools \
         dbus-x11 \
         xfce4 \
         novnc \
