@@ -3,15 +3,15 @@
     "dockerfile": "Dockerfile"
   },
   "privileged": true,
-  "forwardPorts": [6080],
+  "forwardPorts": [5900],
   "portsAttributes": {
-    "6080": {
-      "label": "noVNC",
+    "5900": {
+      "label": "TigerVNC",
       "onAutoForward": "silent",
-      "visibility": "public"
+      "visibility": "private"
     }
   },
   "runArgs": ["--cap-add=SYS_ADMIN"],
-  "postCreateCommand": "mkdir -p ~/.vnc && printf 'password\\n' | tigervncpasswd -f > ~/.vnc/passwd && chmod 600 ~/.vnc/passwd && git clone https://github.com/novnc/noVNC.git",
-  "postStartCommand": "tigervncserver -xstartup \"xfce4-session\" -rfbport 5900 && ./noVNC/utils/novnc_proxy --vnc 127.0.0.1:5900 --listen 0.0.0.0:6080"
+  "postCreateCommand": "mkdir -p ~/.vnc && printf 'password\\n' | tigervncpasswd -f > ~/.vnc/passwd && chmod 600 ~/.vnc/passwd",
+  "postStartCommand": "tigervncserver -xstartup \"xfce4-session\" -rfbport 5900"
 }

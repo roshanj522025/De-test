@@ -11,7 +11,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN echo 'keyboard-configuration keyboard-configuration/layoutcode string us' | debconf-set-selections && \
     echo 'keyboard-configuration keyboard-configuration/layout select English (US)' | debconf-set-selections
 
-# Install only what's needed: VNC + XFCE (no Cinnamon, no extra goodies/tooling)
+# Install only what's needed: TigerVNC + XFCE (no noVNC, no websockify)
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
@@ -19,8 +19,6 @@ RUN apt-get update && \
         tigervnc-tools \
         dbus-x11 \
         xfce4 \
-        novnc \
-        python3-websockify \
         firefox-esr && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
